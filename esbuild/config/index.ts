@@ -4,6 +4,11 @@ type ILoader = {
   [key: string]: Loader;
 };
 
+export const MODE = process.env.NODE_ENV || "development";
+
+const IS_DEV = MODE === "development";
+const IS_PROD = MODE === "production";
+const IS_QA = MODE === "qa";
 export const DEV_SERVER_PORT = 3000;
 export const DEV_SERVER_URL = `http://localhost:${DEV_SERVER_PORT}`;
 export const PUBLIC_PATH = "public";
@@ -48,10 +53,11 @@ export const transformOptions: BuildOptions = {
 
 export const buildOptions: BuildOptions = {
   entryPoints: ["src/index.tsx"],
+  entryNames: "[dir]/[name]-[hash]",
   outdir: "build",
   bundle: true,
-  sourcemap: true,
-  minify: true,
+  sourcemap: IS_DEV || IS_QA,
+  minify: IS_PROD,
   format: "esm",
   inject: ["esbuild/config/react-shim.ts"],
   target: ["es6"],

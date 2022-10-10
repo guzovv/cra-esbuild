@@ -8,7 +8,9 @@
   "scripts": {
     "type-check": "tsc",
     "start": "yarn type-check && ts-node esbuild/serve",
-    "build": "yarn type-check && ts-node esbuild/build",
+    "build": "yarn clean && yarn type-check && ts-node esbuild/build",
+    "build:prod": "yarn clean && yarn type-check && cross-env NODE_ENV=production ts-node esbuild/build",
+    "clean": "rimraf build",
     "test": "yarn type-check && jest"
   },
   "dependencies": {
@@ -31,6 +33,7 @@
     "@testing-library/user-event": "^13.2.1",
     "@types/jest": "^26.0.15",
     "babel-jest": "^27.0.6",
+    "cross-env": "^7.0.3",
     "eslint": "^7.32.0",
     "eslint-plugin-jest-dom": "^3.9.0",
     "eslint-plugin-jsx-a11y": "^6.4.1",
@@ -38,6 +41,7 @@
     "eslint-plugin-react-hooks": "^4.2.0",
     "eslint-plugin-testing-library": "^4.11.0",
     "jest": "^27.0.6",
-    "prettier": "^2.7.1"
+    "prettier": "^2.7.1",
+    "rimraf": "^3.0.2"
   }
 }
